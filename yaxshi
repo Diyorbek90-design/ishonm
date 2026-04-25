@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eng chiroyli formula</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fce3ec 0%, #ffe8e8 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .formula-box {
+            background-color: #fff0f5;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            color: #c2185b;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .variables {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .var-item {
+            flex: 1;
+            font-size: 14px;
+        }
+
+        .var-item strong {
+            display: block;
+            color: #d81b60;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        h2 {
+            color: #d81b60;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 10px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .btn-yes {
+            background-color: #ff4081;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 64, 129, 0.3);
+        }
+
+        .btn-yes:hover {
+            background-color: #e91e63;
+        }
+
+        .btn-no {
+            background-color: #f5f5f5;
+            color: #555;
+        }
+
+        /* Modal oyna stillari */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h3 {
+            color: #d81b60;
+            margin-bottom: 30px;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Mobil qurilmalar uchun moslashuvchanlik */
+        @media (max-width: 600px) {
+            .variables {
+                flex-direction: column;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sen bilan hayotimning eng chiroyli formulasi topildi 💖</h1>
+        
+        <div class="formula-box">
+            (Men + Sen)<sup>∞</sup> = Muhabbatning eng chiroyli natijasi
+        </div>
+
+        <div class="variables">
+            <div class="var-item">
+                <strong>∞ Cheksizlik</strong>
+                Senga bo'lgan mehrim oddiy son emas, u cheksizlikka intiladi.
+            </div>
+            <div class="var-item">
+                <strong>√Baxt</strong>
+                Hayotimning ildizi ostida qarasam, javobi hamisha sensan.
+            </div>
+            <div class="var-item">
+                <strong>x = Sen</strong>
+                Qalbimdagi noma'lumni qancha izlasam ham, javob bitta chiqadi.
+            </div>
+        </div>
+
+        <p class="description">
+            Har bir darsing kabi sen ham tartibli, aqlli, chiroyli va qalbim uchun eng qadrli insonsan. Bugun esa bitta muhim savolim bor...
+        </p>
+
+        <h2>Meni ham sevasanmi? 🥰</h2>
+
+        <div class="buttons">
+            <button class="btn-yes" id="mainYesBtn">Ha ❤️</button>
+            <button class="btn-no" id="runawayBtn">Yo'q 😅</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <h3 id="modalText">Aniq sevasanmi? 💕</h3>
+            <div class="modal-buttons" id="modalButtons">
+                <button class="btn-yes" id="modalYesBtn">Ha ❤️</button>
+                <button class="btn-no" id="modalNoBtn">Yo'q 😅</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // "Yo'q" tugmasining qochib ketishi
+        const runawayBtn = document.getElementById('runawayBtn');
+        
+        function moveButton() {
+            const maxX = window.innerWidth - runawayBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - runawayBtn.offsetHeight - 20;
+            
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+            
+            runawayBtn.style.position = 'fixed';
+            runawayBtn.style.left = randomX + 'px';
+            runawayBtn.style.top = randomY + 'px';
+        }
+
+        // Kompyuter uchun
+        runawayBtn.addEventListener('mouseover', moveButton);
+        // Telefon uchun
+        runawayBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Bosilishini oldini olish
+            moveButton();
+        });
+
+        // Modal oyna mantiqiy qismi
+        const mainYesBtn = document.getElementById('mainYesBtn');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const modalText = document.getElementById('modalText');
+        const modalYesBtn = document.getElementById('modalYesBtn');
+        const modalNoBtn = document.getElementById('modalNoBtn');
+        const modalButtons = document.getElementById('modalButtons');
+
+        // Savollar ro'yxati (videodagidek)
+        const questions = [
+            "Aniq sevasanmi? 💕",
+            "Haqiqattanmi? 🥰",
+            "Juda-juda sevasanmi? 💖",
+            "Rostdan ham meni tanladingmi? ✨",
+            "Bu yakuniy javobmi? 😇",
+            "Har kuni sevaverasanmi? 🌹",
+            "Cheksiz sevging bormi? ♾️",
+            "Oxirgi bor so'rayman: rostdan ham sevasanmi? 🫶",
+            "MALADES 👍<br><br>Demak, muhabbat tenglamasi muvaffaqiyatli yechildi! 💖"
+        ];
+
+        let currentQuestionIndex = 0;
+
+        // Asosiy sahifada "Ha" bosilganda
+        mainYesBtn.addEventListener('click', () => {
+            modalOverlay.style.display = 'flex';
+        });
+
+        // Modaldagi "Yo'q" tugmasi ham qochib ketsin
+        modalNoBtn.addEventListener('mouseover', function() {
+            const maxX = modalOverlay.offsetWidth - modalNoBtn.offsetWidth - 20;
+            const maxY = modalOverlay.offsetHeight - modalNoBtn.offsetHeight - 20;
+            
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+            
+            modalNoBtn.style.position = 'fixed';
+            modalNoBtn.style.left = randomX + 'px';
+            modalNoBtn.style.top = randomY + 'px';
+        });
+
+        // Modaldagi "Ha" bosilganda savollarni almashtirish
+        modalYesBtn.addEventListener('click', () => {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                modalText.innerHTML = questions[currentQuestionIndex];
+                
+                // Oxirgi "Malades" qismiga kelganda tugmalarni yashirish
+                if (currentQuestionIndex === questions.length - 1) {
+                    modalButtons.style.display = 'none';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
