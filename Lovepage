@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhabbat Formulasi 💖</title>
+    <style>
+        /* Umumiy fon va sahifa dizayni */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffc0cb, #ffe4e1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Asosiy oq karta dizayni */
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 550px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #d81b60;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+
+        /* Formula qutisi */
+        .formula-box {
+            background: #fce4ec;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #c2185b;
+            font-size: 18px;
+        }
+
+        /* O'zgaruvchilar qismi */
+        .variables {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 30px;
+            color: #666;
+            text-align: left;
+            padding: 0 10px;
+        }
+
+        .variables div {
+            width: 30%;
+        }
+
+        .variables strong {
+            color: #d81b60;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Tugmalar dizayni */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        .btn-yes {
+            background-color: #e91e63;
+            color: white;
+            box-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
+        }
+
+        .btn-yes:hover {
+            background-color: #d81b60;
+        }
+
+        .btn-no {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+            position: relative;
+            z-index: 20;
+        }
+
+        /* Modal (Ketma-ket savollar oynasi) */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 192, 203, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            width: 320px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-content h3 {
+            color: #d81b60;
+            margin-bottom: 30px;
+        }
+
+        /* Yakuniy ekran */
+        .final-screen {
+            display: none;
+        }
+
+        .final-screen h1 {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+        
+        .progress-text {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card" id="mainCard">
+        <h1>Sen bilan hayotimning eng chiroyli formulasi topildi 💖</h1>
+        <p>Azizim, sen matematika o'qituvchisi bo'lsang ham, yuragimdagi hislarni hech qanday formula to'liq ifodalay olmaydi. Lekin bitta narsa aniq: <strong>menga eng to'g'ri yechim — bu sensan.</strong></p>
+
+        <div class="formula-box">
+            (Men + Sen)<sup>∞</sup> = Muhabbatning eng chiroyli natijasi
+        </div>
+
+        <div class="variables">
+            <div><strong>∞ Cheksizlik</strong>Senga bo'lgan mehrim cheksiz.</div>
+            <div><strong>√Baxt</strong>Hayotimning ildizi o'zingsan.</div>
+            <div><strong>x = Sen</strong>Qalbimdagi yagona javob.</div>
+        </div>
+
+        <h3 style="color: #d81b60;">Meni ham sevasanmi? 🥺</h3>
+        
+        <div class="buttons">
+            <button class="btn-yes" onclick="startQuestions()">Ha 💘</button>
+            <button class="btn-no" id="noBtn" onmouseover="moveButton()">Yo'q 😢</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="questionModal">
+        <div class="modal-content">
+            <div class="progress-text" id="progressText">1 / 10</div>
+            <h3 id="questionText">Aniq sevasanmi? 💕</h3>
+            <div class="buttons" style="margin-top: 0;">
+                <button class="btn-yes" onclick="nextQuestion()">Ha ></button>
+                <button class="btn-no" id="modalNoBtn" onmouseover="moveModalButton()">Yo'q 😜</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="card final-screen" id="finalCard">
+        <h1>MALADES 👍</h1>
+        <p style="font-size: 18px; font-weight: bold; color: #d81b60;">Demak, muhabbat tenglamasi muvaffaqiyatli yechildi 💖</p>
+    </div>
+
+    <script>
+        // "Yo'q" tugmasi uchun qiziqarli yozuvlar
+        const noBtnTexts = ["Qochdim 😁", "Tutolmaysan 😝", "Yana urinib ko'r 😂", "Baribir bosolmaysiz 🤪"];
+        const noBtn = document.getElementById('noBtn');
+        const modalNoBtn = document.getElementById('modalNoBtn');
+
+        // Asosiy ekrandagi "Yo'q" tugmasi qochishi
+        function moveButton() {
+            // Ekranning ixtiyoriy joyiga o'tishi uchun hisoblash
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - 20);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - 20);
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = `${Math.abs(x)}px`;
+            noBtn.style.top = `${Math.abs(y)}px`;
+            
+            // Matnni o'zgartirish
+            noBtn.innerText = noBtnTexts[Math.floor(Math.random() * noBtnTexts.length)];
+        }
+
+        // Modaldagi "Yo'q" tugmasi qochishi
+        function moveModalButton() {
+            const modal = document.querySelector('.modal-content');
+            const maxX = modal.offsetWidth - modalNoBtn.offsetWidth - 20;
+            const maxY = modal.offsetHeight - modalNoBtn.offsetHeight - 20;
+            
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+
+            modalNoBtn.style.position = 'absolute';
+            modalNoBtn.style.left = `${Math.abs(x)}px`;
+            modalNoBtn.style.top = `${Math.abs(y)}px`;
+        }
+
+        // Ketma-ket beriladigan savollar ro'yxati
+        const questions = [
+            "Aniq sevasanmi? 💕",
+            "Haqiqattanmi? 🥰",
+            "Juda-juda sevasanmi? 💖",
+            "Rostdan ham meni tanladingmi? ✨",
+            "Bu yakuniy javobmi? 🥺",
+            "Har kuni sevaverasanmi? 🌹",
+            "Cheksiz sevging bormi? ∞",
+            "Oxirgi bor so'rayman: rostdan ham sevasanmi? 🫶"
+        ];
+
+        let currentQuestion = 0;
+
+        // Savollarni boshlash
+        function startQuestions() {
+            document.getElementById('questionModal').style.display = 'flex';
+            updateModal();
+        }
+
+        // Keyingi savolga o'tish
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                updateModal();
+                // Modaldagi "Yo'q" tugmasini joyiga qaytarish
+                modalNoBtn.style.position = 'relative';
+                modalNoBtn.style.left = 'auto';
+                modalNoBtn.style.top = 'auto';
+            } else {
+                // Barcha savollar tugasa, yakuniy ekranni ko'rsatish
+                document.getElementById('questionModal').style.display = 'none';
+                document.getElementById('mainCard').style.display = 'none';
+                document.getElementById('finalCard').style.display = 'block';
+            }
+        }
+
+        // Modal matnlarini yangilash
+        function updateModal() {
+            document.getElementById('questionText').innerText = questions[currentQuestion];
+            document.getElementById('progressText').innerText = `${currentQuestion + 1} / ${questions.length}`;
+        }
+    </script>
+</body>
+</html>
